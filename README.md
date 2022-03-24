@@ -166,7 +166,7 @@ Breakpoints:
 Також потрібно дотримуватись наступного `branch` найменування та `commit` повідомлень:
 
  - Приклад `branch` найменування: 
-	-- `EXP-{branch_number}-{short_task_description}`
+	-- `EXP-{branch_number}-{short_task_description}`  
 	-- `EXP-5-сreating_authorization_form`
    
  - Приклад `commit` повідомлень:   
