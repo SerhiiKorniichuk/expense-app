@@ -1,3 +1,8 @@
+import { Box } from '@mui/material';
+import FormAddCategory from 'components/FormAddCategory';
+import FormAddTransaction from 'components/FormAddTransaction';
+import ListCategories from 'components/ListCategories';
+import ListTransactions from 'components/ListTransactions';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React, { useEffect } from 'react';
 import {
@@ -14,7 +19,25 @@ const Main = () => {
         dispatch(initializationCategories(idUser));
         dispatch(initializationTransactions(idUser));
     }, []);
-    return <div>Main</div>;
+
+    return (
+        <Box
+            sx={{
+                display: 'flex',
+                padding: '3%',
+                flexDirection: { xs: 'column', md: 'row' },
+            }}
+        >
+            <Box sx={{ margin: '10px' }}>
+                <ListCategories />
+                <FormAddCategory />
+            </Box>
+            <Box sx={{ width: '100%', margin: '10px' }}>
+                <FormAddTransaction />
+                <ListTransactions />
+            </Box>
+        </Box>
+    );
 };
 
 export default Main;
