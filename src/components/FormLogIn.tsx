@@ -1,7 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, TextField } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { authorizationUserByNameAndPassword } from 'store/reducers/ActionCreators';
+import { authSelector } from 'store/reducers/AuthSlice';
 import * as yup from 'yup';
 
 interface InterfaceLogIn {
@@ -15,6 +19,9 @@ const validationSchema = yup.object({
 });
 
 const FormLogIn: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { idUser } = useAppSelector(authSelector);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -26,7 +33,7 @@ const FormLogIn: React.FC = () => {
     });
 
     const submitForm = (data: InterfaceLogIn) => {
-        console.log(data);
+        dispatch(authorizationUserByNameAndPassword(data));
     };
 
     return (
