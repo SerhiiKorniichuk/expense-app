@@ -1,7 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import crypto from 'crypto-js';
+import { ICategory } from 'models/ICategory';
 import { IUser } from 'models/IUser';
+import { AppDispatch } from 'store/store';
+import { categorySlice } from './CategorySlice';
+import { transactionSlice } from './TransactionSlice';
 
 export const authorizationUserByNameAndPassword = createAsyncThunk(
     'user/authUserByPassword',
@@ -26,3 +30,45 @@ export const authorizationUserByNameAndPassword = createAsyncThunk(
         }
     }
 );
+
+export const initializationCategories =
+    (idUser: number) => (dispatch: AppDispatch) => {
+        let masCategories: ICategory[];
+        const localCategories = localStorage.getItem(`categories${idUser}`);
+        if (localCategories) {
+            masCategories = JSON.parse(localCategories);
+        } else {
+            masCategories = [
+                {
+                    id: 1,
+                    label: 'зарплатня',
+                },
+                {
+                    id: 2,
+                    label: 'подарунки',
+                },
+                {
+                    id: 3,
+                    label: 'подорож',
+                },
+            ];
+            localStorage.setItem(
+                `categories${idUser}`,
+                JSON.stringify(masCategories)
+            );
+        }
+        dispatch(categorySlice.actions.initialCategory(masCategories));
+    };
+
+export const initializationTransactions =
+    (idUser: number) => (dispatch: AppDispatch) => {
+        const localTransactions = localStorage.getItem(
+            `transactions_${idUser}`
+        );
+        if (localTransactions) {
+            const masTransactions = JSON.parse(localTransactions);
+            dispatch(
+                transactionSlice.actions.initialTransaction(masTransactions)
+            );
+        }
+    };
