@@ -16,9 +16,11 @@ const Main = () => {
     const { idUser } = useAppSelector(authSelector);
 
     useEffect(() => {
-        dispatch(initializationCategories(idUser));
-        dispatch(initializationTransactions(idUser));
-    }, []);
+        if (idUser) {
+            dispatch(initializationCategories(idUser));
+            dispatch(initializationTransactions(idUser));
+        }
+    }, [dispatch, idUser]);
 
     return (
         <Box

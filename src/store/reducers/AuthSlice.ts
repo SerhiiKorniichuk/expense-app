@@ -4,14 +4,17 @@ import {
     PayloadAction,
 } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { authorizationUserByNameAndPassword } from './ActionCreators';
+import {
+    authorizationUserByNameAndPassword,
+    authorizationUserByToken,
+} from './ActionCreators';
 
 interface AuthState {
-    idUser: number;
+    idUser: number | null;
 }
 
 const initialState: AuthState = {
-    idUser: 0,
+    idUser: null,
 };
 
 export const authSlice = createSlice({
@@ -19,11 +22,17 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         clearUser(state) {
-            state.idUser = 0;
+            state.idUser = null;
         },
     },
     extraReducers: {
         [authorizationUserByNameAndPassword.fulfilled.type]: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.idUser = action.payload;
+        },
+        [authorizationUserByToken.fulfilled.type]: (
             state,
             action: PayloadAction<number>
         ) => {

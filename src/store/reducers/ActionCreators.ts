@@ -24,7 +24,23 @@ export const authorizationUserByNameAndPassword = createAsyncThunk(
                 localStorage.setItem('token', user.token);
                 return user.id;
             }
-            return 0;
+            return null;
+        } catch (e) {
+            return thunkAPI.rejectWithValue('Не вдалося знайти користувача');
+        }
+    }
+);
+
+export const authorizationUserByToken = createAsyncThunk(
+    'user/fetchByToken',
+    async (token: string, thunkAPI) => {
+        try {
+            const response = await axios.get(`mocks/users.json`);
+            const user = response.data.users.find(
+                (user: IUser) => user.token == token
+            );
+            if (user) return user.id;
+            return null;
         } catch (e) {
             return thunkAPI.rejectWithValue('Не вдалося знайти користувача');
         }
@@ -34,7 +50,7 @@ export const authorizationUserByNameAndPassword = createAsyncThunk(
 export const initializationCategories =
     (idUser: number) => (dispatch: AppDispatch) => {
         let masCategories: ICategory[];
-        const localCategories = localStorage.getItem(`categories${idUser}`);
+        const localCategories = localStorage.getItem(`categories_${idUser}`);
         if (localCategories) {
             masCategories = JSON.parse(localCategories);
         } else {
@@ -53,7 +69,7 @@ export const initializationCategories =
                 },
             ];
             localStorage.setItem(
-                `categories${idUser}`,
+                `categories_${idUser}`,
                 JSON.stringify(masCategories)
             );
         }
