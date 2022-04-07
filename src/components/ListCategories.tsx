@@ -2,14 +2,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { ICategory } from 'models/ICategory';
 import React from 'react';
-import { categorySlice } from '../store/reducers/CategorySlice';
+import {
+    categorySelector,
+    categorySlice,
+} from '../store/reducers/CategorySlice';
 
 const ListCategories = () => {
     const dispatch = useAppDispatch();
-    const { categories, actualCategory } = useAppSelector(
-        (state) => state.categoryReducer
-    );
+    const { categories, actualCategory } = useAppSelector(categorySelector);
 
     const handleChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -31,7 +33,7 @@ const ListCategories = () => {
                     exclusive
                     onChange={handleChange}
                 >
-                    {categories.map((category) => (
+                    {categories.map((category: ICategory) => (
                         <ToggleButton key={category.id} value={category.id}>
                             {category.label}
                             <DeleteIcon

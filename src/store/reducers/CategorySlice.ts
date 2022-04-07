@@ -1,5 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+    createDraftSafeSelector,
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
 import { ICategory } from 'models/ICategory';
+import { RootState } from 'store/store';
 
 interface CategoryState {
     categories: ICategory[];
@@ -23,6 +28,11 @@ export const categorySlice = createSlice({
             state.actualCategory = action.payload;
         },
     },
+});
+
+const rootState = (state: RootState) => state.categoryReducer;
+export const categorySelector = createDraftSafeSelector(rootState, (state) => {
+    return state;
 });
 
 export default categorySlice.reducer;

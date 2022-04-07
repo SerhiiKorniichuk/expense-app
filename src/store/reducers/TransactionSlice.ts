@@ -1,4 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+    createDraftSafeSelector,
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
+import { RootState } from 'store/store';
 import { ITransaction } from '../../models/ITransaction';
 
 interface TransactionState {
@@ -19,5 +24,13 @@ export const transactionSlice = createSlice({
     },
     extraReducers: {},
 });
+
+const rootState = (state: RootState) => state.transactionReducer;
+export const transactionSelector = createDraftSafeSelector(
+    rootState,
+    (state) => {
+        return state;
+    }
+);
 
 export default transactionSlice.reducer;
