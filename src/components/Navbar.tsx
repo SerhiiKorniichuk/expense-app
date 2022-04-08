@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useAppDispatch } from 'hooks/redux';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GRAPHICS_SCREEN, LOGIN_PATH, MAIN_SCREEN } from 'routes';
@@ -18,8 +19,9 @@ const pages = [
 ];
 
 const Navbar: React.FC = () => {
-    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);

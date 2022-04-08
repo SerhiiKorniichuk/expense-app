@@ -48,12 +48,14 @@ const FormAddCategory: React.FC = () => {
     };
 
     const clickAddCategory = (data: InterfaceAddCategory) => {
-        reset();
-        setOpen(false);
-        if (idUser) {
+        const inputLabel = data.label.toLowerCase();
+        const idCategoryInCategories = categories.findIndex(
+            (category) => category.label == inputLabel
+        );
+        if (idUser && idCategoryInCategories === -1) {
             const newCategory: ICategory = {
                 id: categories.length + 1,
-                label: data.label,
+                label: inputLabel,
             };
             const dataForAdd = {
                 idUser,
@@ -61,6 +63,8 @@ const FormAddCategory: React.FC = () => {
             };
             dispatch(addCategory(dataForAdd));
         }
+        reset();
+        setOpen(false);
     };
 
     return (

@@ -77,6 +77,7 @@ export const initializationCategories =
             );
         }
         dispatch(categorySlice.actions.initialCategory(masCategories));
+        dispatch(categorySlice.actions.changeActualCategory(0));
     };
 
 export const addCategory =
@@ -94,6 +95,28 @@ export const addCategory =
         );
         dispatch(categorySlice.actions.addCategory(newCategory));
     };
+
+export const deleteCategory =
+    ({ idUser, idCategory }: { idUser: number; idCategory: number }) =>
+    (dispatch: AppDispatch) => {
+        let masCategories: ICategory[] = [];
+        const localCategories = localStorage.getItem(`categories_${idUser}`);
+        if (localCategories) {
+            masCategories = JSON.parse(localCategories);
+        }
+        masCategories = masCategories.filter(
+            (category: ICategory) => category.id !== idCategory
+        );
+        localStorage.setItem(
+            `categories_${idUser}`,
+            JSON.stringify(masCategories)
+        );
+        dispatch(categorySlice.actions.initialCategory(masCategories));
+    };
+
+export const changeActualCategory = (id: number) => (dispatch: AppDispatch) => {
+    dispatch(categorySlice.actions.changeActualCategory(id));
+};
 
 //actions with transactionSlice
 export const initializationTransactions =
@@ -131,4 +154,29 @@ export const addTransaction =
             JSON.stringify(masTransactions)
         );
         dispatch(transactionSlice.actions.addTransaction(newTransaction));
+    };
+
+export const changeCategoryForTransactions =
+    ({ idUser, idCategory }: { idUser: number; idCategory: number }) =>
+    (dispatch: AppDispatch) => {
+        let masTransactions: ITransaction[] = [];
+        const localTransactions = localStorage.getItem(
+            `transactions_${idUser}`
+        );
+        if (localTransactions) {
+            masTransactions = JSON.parse(localTransactions);
+        }
+        masTransactions = masTransactions.map((transaction: ITransaction) => {
+            if (transaction.id_category === idCategory)
+                return {
+                    ...transaction,
+                    id_category: 0,
+                };
+            return transaction;
+        });
+        localStorage.setItem(
+            `transactions_${idUser}`,
+            JSON.stringify(masTransactions)
+        );
+        dispatch(transactionSlice.actions.initialTransaction(masTransactions));
     };
