@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import crypto from 'crypto-js';
 import { ICategory } from 'models/ICategory';
+import { ITransaction } from 'models/ITransaction';
 import { IUser } from 'models/IUser';
 import { AppDispatch } from 'store/store';
 import { categorySlice } from './CategorySlice';
@@ -106,4 +107,28 @@ export const initializationTransactions =
                 transactionSlice.actions.initialTransaction(masTransactions)
             );
         }
+    };
+
+export const addTransaction =
+    ({
+        idUser,
+        newTransaction,
+    }: {
+        idUser: number;
+        newTransaction: ITransaction;
+    }) =>
+    (dispatch: AppDispatch) => {
+        let masTransactions: ITransaction[] = [];
+        const localTransactions = localStorage.getItem(
+            `transactions_${idUser}`
+        );
+        if (localTransactions) {
+            masTransactions = JSON.parse(localTransactions);
+        }
+        masTransactions = [...masTransactions, newTransaction];
+        localStorage.setItem(
+            `transactions_${idUser}`,
+            JSON.stringify(masTransactions)
+        );
+        dispatch(transactionSlice.actions.addTransaction(newTransaction));
     };

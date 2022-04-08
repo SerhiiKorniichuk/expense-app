@@ -6,10 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import { ITransaction } from 'models/ITransaction';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { addTransaction } from 'store/reducers/ActionCreators';
 import { authSelector } from 'store/reducers/AuthSlice';
 import { categorySelector } from 'store/reducers/CategorySlice';
+import { transactionSelector } from 'store/reducers/TransactionSlice';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
@@ -26,6 +29,7 @@ const validationSchema = yup.object({
 const FormAddTransaction: React.FC = () => {
     const dispatch = useAppDispatch();
     const { idUser } = useAppSelector(authSelector);
+    const { transactions } = useAppSelector(transactionSelector);
     const { actualCategory } = useAppSelector(categorySelector);
     const [open, setOpen] = useState<boolean>(false);
 
@@ -47,10 +51,24 @@ const FormAddTransaction: React.FC = () => {
         setOpen(false);
     };
 
-    const addTransaction = (data: InterfaceAddTransaction) => {
+    const clickAddTransaction = (data: InterfaceAddTransaction) => {
         reset();
-        console.log('add transaction');
         setOpen(false);
+        if (idUser) {
+            const dateNow = new Date();
+            const newTransaction: ITransaction = {
+                id: transactions.length + 1,
+                label: data.label,
+                date: dateNow.toLocaleString(),
+                amount: data.amount,
+                id_category: actualCategory,
+            };
+            const dataForAdd = {
+                idUser,
+                newTransaction,
+            };
+            dispatch(addTransaction(dataForAdd));
+        }
     };
 
     if (actualCategory !== null) {
@@ -91,7 +109,7 @@ const FormAddTransaction: React.FC = () => {
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleSubmit(addTransaction)}>
+                            <Button onClick={handleSubmit(clickAddTransaction)}>
                                 Додати
                             </Button>
                             <Button onClick={handleClose}>Відмінити</Button>
