@@ -6,8 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { ICategory } from 'models/ICategory';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { addCategory } from 'store/reducers/ActionCreators';
+import { authSelector } from 'store/reducers/AuthSlice';
+import { categorySelector } from 'store/reducers/CategorySlice';
 import * as yup from 'yup';
 
 interface InterfaceAddCategory {
@@ -19,6 +24,9 @@ const validationSchema = yup.object({
 });
 
 const FormAddCategory: React.FC = () => {
+    const { idUser } = useAppSelector(authSelector);
+    const { categories } = useAppSelector(categorySelector);
+    const dispatch = useAppDispatch();
     const [open, setOpen] = useState<boolean>(false);
 
     const {
@@ -41,8 +49,18 @@ const FormAddCategory: React.FC = () => {
 
     const clickAddCategory = (data: InterfaceAddCategory) => {
         reset();
-        console.log('add category');
         setOpen(false);
+        if (idUser) {
+            const newCategory: ICategory = {
+                id: categories.length + 1,
+                label: data.label,
+            };
+            const dataForAdd = {
+                idUser,
+                newCategory,
+            };
+            dispatch(addCategory(dataForAdd));
+        }
     };
 
     return (

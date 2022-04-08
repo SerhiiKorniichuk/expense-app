@@ -7,6 +7,7 @@ import { AppDispatch } from 'store/store';
 import { categorySlice } from './CategorySlice';
 import { transactionSlice } from './TransactionSlice';
 
+//actions with authSlice
 export const authorizationUserByNameAndPassword = createAsyncThunk(
     'user/authUserByPassword',
     async (
@@ -47,6 +48,7 @@ export const authorizationUserByToken = createAsyncThunk(
     }
 );
 
+//actions with categorySlice
 export const initializationCategories =
     (idUser: number) => (dispatch: AppDispatch) => {
         let masCategories: ICategory[];
@@ -76,6 +78,23 @@ export const initializationCategories =
         dispatch(categorySlice.actions.initialCategory(masCategories));
     };
 
+export const addCategory =
+    ({ idUser, newCategory }: { idUser: number; newCategory: ICategory }) =>
+    (dispatch: AppDispatch) => {
+        let masCategories: ICategory[] = [];
+        const localCategories = localStorage.getItem(`categories_${idUser}`);
+        if (localCategories) {
+            masCategories = JSON.parse(localCategories);
+        }
+        masCategories = [...masCategories, newCategory];
+        localStorage.setItem(
+            `categories_${idUser}`,
+            JSON.stringify(masCategories)
+        );
+        dispatch(categorySlice.actions.addCategory(newCategory));
+    };
+
+//actions with transactionSlice
 export const initializationTransactions =
     (idUser: number) => (dispatch: AppDispatch) => {
         const localTransactions = localStorage.getItem(
