@@ -12,13 +12,18 @@ import { useAppDispatch } from 'hooks/redux';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GRAPHICS_SCREEN, LOGIN_PATH, MAIN_SCREEN } from 'routes';
+import { clearAll } from 'store/reducers/ActionCreators';
+
+interface NavbarProps {
+    isAuth: boolean;
+}
 
 const pages = [
     { name: 'Головна сторінка', link: MAIN_SCREEN },
     { name: 'Статистика', link: GRAPHICS_SCREEN },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -33,12 +38,38 @@ const Navbar: React.FC = () => {
 
     const logOut = () => {
         localStorage.removeItem('token');
+        dispatch(clearAll());
         navigate(LOGIN_PATH);
     };
 
-    const logIn = () => {
-        navigate(LOGIN_PATH);
-    };
+    if (!isAuth)
+        return (
+            <AppBar position="static">
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                        >
+                            Мої фінанси
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
+                            Мої фінанси
+                        </Typography>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        );
 
     return (
         <AppBar position="static">

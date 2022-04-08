@@ -29,6 +29,10 @@ export const categorySlice = createSlice({
         changeActualCategory(state, action: PayloadAction<number>) {
             state.actualCategory = action.payload;
         },
+        clearCategory(state) {
+            state.categories = [];
+            state.actualCategory = -1;
+        },
     },
 });
 

@@ -4,11 +4,11 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { AUTH_PAGE, LOGIN_SCREEN } from 'routes';
 import LogIn from './LogIn';
 
-export const AuthPage = () => {
+export const AuthPage: React.FC = () => {
     console.log('authpage');
     return (
         <>
-            <Navbar />
+            <Navbar isAuth={false} />
             <Routes>
                 <Route path={LOGIN_SCREEN} element={<LogIn />} />
                 <Route

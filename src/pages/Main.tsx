@@ -11,7 +11,7 @@ import {
 } from 'store/reducers/ActionCreators';
 import { authSelector } from 'store/reducers/AuthSlice';
 
-const Main = () => {
+const Main: React.FC = () => {
     const dispatch = useAppDispatch();
     const { idUser } = useAppSelector(authSelector);
 

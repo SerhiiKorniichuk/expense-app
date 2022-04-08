@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import crypto from 'crypto-js';
-import { ICategory } from 'models/ICategory';
+import { CategoryAnother, ICategory } from 'models/ICategory';
 import { ITransaction } from 'models/ITransaction';
 import { IUser } from 'models/IUser';
 import { AppDispatch } from 'store/store';
+import { authSlice } from './AuthSlice';
 import { categorySlice } from './CategorySlice';
 import { transactionSlice } from './TransactionSlice';
 
@@ -77,7 +78,9 @@ export const initializationCategories =
             );
         }
         dispatch(categorySlice.actions.initialCategory(masCategories));
-        dispatch(categorySlice.actions.changeActualCategory(0));
+        dispatch(
+            categorySlice.actions.changeActualCategory(CategoryAnother.id)
+        );
     };
 
 export const addCategory =
@@ -170,7 +173,7 @@ export const changeCategoryForTransactions =
             if (transaction.id_category === idCategory)
                 return {
                     ...transaction,
-                    id_category: 0,
+                    id_category: CategoryAnother.id,
                 };
             return transaction;
         });
@@ -180,3 +183,9 @@ export const changeCategoryForTransactions =
         );
         dispatch(transactionSlice.actions.initialTransaction(masTransactions));
     };
+
+export const clearAll = () => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.clearUser());
+    dispatch(categorySlice.actions.clearCategory());
+    dispatch(transactionSlice.actions.clearTransaction());
+};

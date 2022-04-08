@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { ICategory } from 'models/ICategory';
+import { CategoryAnother, ICategory } from 'models/ICategory';
 import React from 'react';
 import {
     changeActualCategory,
@@ -12,7 +12,7 @@ import {
 import { authSelector } from 'store/reducers/AuthSlice';
 import { categorySelector } from '../store/reducers/CategorySlice';
 
-const ListCategories = () => {
+const ListCategories: React.FC = () => {
     const dispatch = useAppDispatch();
     const { idUser } = useAppSelector(authSelector);
     const { categories, actualCategory } = useAppSelector(categorySelector);
@@ -22,7 +22,7 @@ const ListCategories = () => {
         nextView: number
     ) => {
         let idActualCategory = nextView;
-        if (!idActualCategory) idActualCategory = 0;
+        if (!idActualCategory) idActualCategory = CategoryAnother.id;
         dispatch(changeActualCategory(idActualCategory));
     };
 
@@ -51,7 +51,9 @@ const ListCategories = () => {
                         />
                     </ToggleButton>
                 ))}
-                <ToggleButton value={0}>інше</ToggleButton>
+                <ToggleButton value={CategoryAnother.id}>
+                    {CategoryAnother.label}
+                </ToggleButton>
             </ToggleButtonGroup>
         </div>
     );

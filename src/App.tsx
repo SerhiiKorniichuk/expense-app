@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@mui/material';
 import { AuthPage } from 'pages/AuthPage';
 import { HomePage } from 'pages/HomePage';
 import React from 'react';
@@ -7,7 +8,6 @@ import { HistoryRouter } from 'routes/components/HistoryRouter';
 import { PrivateRouter } from 'routes/components/PrivateRouter';
 import { PublicRouter } from 'routes/components/PublicRouter';
 import { history } from 'routes/helpers/history';
-import { ThemeProvider } from 'styled-components';
 import './styles/App.css';
 import theme from './styles/theme';
 

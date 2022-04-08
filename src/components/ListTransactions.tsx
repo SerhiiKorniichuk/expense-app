@@ -5,7 +5,7 @@ import React from 'react';
 import { categorySelector } from 'store/reducers/CategorySlice';
 import { transactionSelector } from 'store/reducers/TransactionSlice';
 
-const ListTransactions = () => {
+const ListTransactions: React.FC = () => {
     const { actualCategory } = useAppSelector(categorySelector);
     const { transactions } = useAppSelector(transactionSelector);
 

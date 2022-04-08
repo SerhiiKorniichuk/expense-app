@@ -5,11 +5,11 @@ import { GRAPHICS_SCREEN, MAIN_SCREEN } from 'routes';
 import Graphics from './Graphics';
 import Main from './Main';
 
-export const HomePage = () => {
+export const HomePage: React.FC = () => {
     console.log('homepage');
     return (
         <>
-            <Navbar />
+            <Navbar isAuth={true} />
             <Routes>
                 <Route path={MAIN_SCREEN} element={<Main />} />
                 <Route path={GRAPHICS_SCREEN} element={<Graphics />} />
