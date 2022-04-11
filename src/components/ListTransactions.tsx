@@ -18,7 +18,8 @@ const ListTransactions: React.FC = () => {
                         (category: ICategory) => category.id == actualCategory
                     )
                     ?.label.toUpperCase() ||
-                    CategoryAnother.label.toUpperCase()}
+                    (CategoryAnother.id == actualCategory &&
+                        CategoryAnother.label.toUpperCase())}
             </h1>
             <div>
                 {transactions.map((tran: ITransaction) => {

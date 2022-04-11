@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -69,8 +69,12 @@ const FormAddCategory: React.FC = () => {
 
     return (
         <div>
-            <Button variant="text" onClick={handleClickOpen}>
-                <AddCircleOutlineIcon />
+            <Button
+                variant="text"
+                onClick={handleClickOpen}
+                sx={{ maxWidth: '150px' }}
+            >
+                <AddIcon />
                 Додати категорію
             </Button>
             <Dialog open={open} onClose={handleClose}>
