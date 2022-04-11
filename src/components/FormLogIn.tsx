@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { MAIN_SCREEN } from 'routes';
 import { authorizationUserByNameAndPassword } from 'store/reducers/ActionCreators';
 import { authSelector } from 'store/reducers/AuthSlice';
 import * as yup from 'yup';
@@ -31,6 +32,10 @@ const FormLogIn: React.FC = () => {
         mode: 'onChange',
         resolver: yupResolver(validationSchema),
     });
+
+    useEffect(() => {
+        if (idUser) navigate(MAIN_SCREEN);
+    }, [idUser, navigate]);
 
     const submitForm = (data: InterfaceLogIn) => {
         dispatch(authorizationUserByNameAndPassword(data));

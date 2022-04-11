@@ -10,8 +10,6 @@ export const PublicRouter: React.FC<PublicRouterProps> = ({ component }) => {
     const token = localStorage.getItem('token');
     const location = useLocation();
 
-    console.log('public route', token);
-
     if (token)
         return <Navigate replace to={MAIN_SCREEN} state={{ from: location }} />;
 

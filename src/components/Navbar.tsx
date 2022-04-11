@@ -51,18 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                        >
-                            Мої фінанси
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{
-                                flexGrow: 1,
-                                display: { xs: 'flex', md: 'none' },
-                            }}
+                            sx={{ mr: 2 }}
                         >
                             Мої фінанси
                         </Typography>

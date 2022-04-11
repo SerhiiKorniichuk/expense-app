@@ -1,12 +1,27 @@
 import Navbar from 'components/Navbar';
-import React from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { GRAPHICS_SCREEN, MAIN_SCREEN } from 'routes';
+import {
+    initializationCategories,
+    initializationTransactions,
+} from 'store/reducers/ActionCreators';
+import { authSelector } from 'store/reducers/AuthSlice';
 import Graphics from './Graphics';
 import Main from './Main';
 
 export const HomePage: React.FC = () => {
-    console.log('homepage');
+    const dispatch = useAppDispatch();
+    const { idUser } = useAppSelector(authSelector);
+
+    useEffect(() => {
+        if (idUser) {
+            dispatch(initializationCategories(idUser));
+            dispatch(initializationTransactions(idUser));
+        }
+    }, [dispatch, idUser]);
+
     return (
         <>
             <Navbar isAuth={true} />

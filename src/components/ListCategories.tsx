@@ -12,7 +12,13 @@ import {
 import { authSelector } from 'store/reducers/AuthSlice';
 import { categorySelector } from '../store/reducers/CategorySlice';
 
-const ListCategories: React.FC = () => {
+interface ListCategoriesProps {
+    isDeleteCategory: boolean;
+}
+
+const ListCategories: React.FC<ListCategoriesProps> = ({
+    isDeleteCategory,
+}) => {
     const dispatch = useAppDispatch();
     const { idUser } = useAppSelector(authSelector);
     const { categories, actualCategory } = useAppSelector(categorySelector);
@@ -44,11 +50,13 @@ const ListCategories: React.FC = () => {
                 {categories.map((category: ICategory) => (
                     <ToggleButton key={category.id} value={category.id}>
                         {category.label}
-                        <DeleteIcon
-                            onClick={() =>
-                                clickDeleteCategory(category.id, idUser)
-                            }
-                        />
+                        {isDeleteCategory && (
+                            <DeleteIcon
+                                onClick={() =>
+                                    clickDeleteCategory(category.id, idUser)
+                                }
+                            />
+                        )}
                     </ToggleButton>
                 ))}
                 <ToggleButton value={CategoryAnother.id}>

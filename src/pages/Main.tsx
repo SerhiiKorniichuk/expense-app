@@ -3,25 +3,9 @@ import FormAddCategory from 'components/FormAddCategory';
 import FormAddTransaction from 'components/FormAddTransaction';
 import ListCategories from 'components/ListCategories';
 import ListTransactions from 'components/ListTransactions';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import React, { useEffect } from 'react';
-import {
-    initializationCategories,
-    initializationTransactions,
-} from 'store/reducers/ActionCreators';
-import { authSelector } from 'store/reducers/AuthSlice';
+import React from 'react';
 
 const Main: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const { idUser } = useAppSelector(authSelector);
-
-    useEffect(() => {
-        if (idUser) {
-            dispatch(initializationCategories(idUser));
-            dispatch(initializationTransactions(idUser));
-        }
-    }, [dispatch, idUser]);
-
     return (
         <Box
             sx={{
@@ -30,13 +14,22 @@ const Main: React.FC = () => {
                 flexDirection: { xs: 'column', md: 'row' },
             }}
         >
-            <Box sx={{ margin: '10px' }}>
-                <ListCategories />
+            <Box
+                sx={{
+                    margin: '10px',
+                }}
+            >
+                <ListCategories isDeleteCategory={true} />
                 <FormAddCategory />
             </Box>
-            <Box sx={{ width: '100%', margin: '10px' }}>
-                <FormAddTransaction />
+            <Box
+                sx={{
+                    width: { md: '100%', lg: '80%', xl: '60%' },
+                    margin: '0px 10px',
+                }}
+            >
                 <ListTransactions />
+                <FormAddTransaction />
             </Box>
         </Box>
     );

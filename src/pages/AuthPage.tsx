@@ -5,7 +5,6 @@ import { AUTH_PAGE, LOGIN_SCREEN } from 'routes';
 import LogIn from './LogIn';
 
 export const AuthPage: React.FC = () => {
-    console.log('authpage');
     return (
         <>
             <Navbar isAuth={false} />

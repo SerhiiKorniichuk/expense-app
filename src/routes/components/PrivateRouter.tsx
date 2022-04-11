@@ -13,8 +13,6 @@ export const PrivateRouter: React.FC<PrivateRouterProps> = ({ component }) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
 
-    console.log('private route', token);
-
     if (token) dispatch(authorizationUserByToken(token));
     else return <Navigate replace to={AUTH_PAGE} state={{ from: location }} />;
 

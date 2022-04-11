@@ -55,11 +55,15 @@ const FormAddTransaction: React.FC = () => {
         reset();
         setOpen(false);
         if (idUser) {
-            const dateNow = new Date();
+            const dateNowString = new Date().toLocaleString('ukr', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+            });
             const newTransaction: ITransaction = {
                 id: transactions.length + 1,
                 label: data.label,
-                date: dateNow.toLocaleString(),
+                date: dateNowString,
                 amount: data.amount,
                 id_category: actualCategory,
             };
