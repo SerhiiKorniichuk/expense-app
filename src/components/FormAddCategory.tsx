@@ -69,11 +69,7 @@ const FormAddCategory: React.FC = () => {
 
     return (
         <div>
-            <Button
-                variant="text"
-                onClick={handleClickOpen}
-                sx={{ maxWidth: '150px' }}
-            >
+            <Button variant="text" onClick={handleClickOpen}>
                 <AddIcon />
                 Додати категорію
             </Button>

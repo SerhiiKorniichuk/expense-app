@@ -33,8 +33,3 @@ a {
     padding: 5%;
     text-align: center;
 }
-
-.itemCategory_div {
-    display: flex;
-    justify-content: space-between;
-}

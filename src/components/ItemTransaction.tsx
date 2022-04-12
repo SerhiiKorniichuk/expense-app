@@ -8,6 +8,11 @@ interface ItemTransactionProps {
     amount: number;
 }
 
+const DivItem = styled('div')({
+    display: 'flex',
+    justifyContent: 'space-between',
+});
+
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     margin: '10px 15% 10px 0px',
@@ -24,10 +29,10 @@ const ItemTransaction: React.FC<ItemTransactionProps> = ({
     return (
         <Item>
             <h1>{label}</h1>
-            <div className="itemCategory_div">
+            <DivItem>
                 <span>{amount}</span>
                 <span>{date}</span>
-            </div>
+            </DivItem>
         </Item>
     );
 };

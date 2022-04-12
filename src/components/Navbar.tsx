@@ -8,6 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import styled from '@mui/system/styled';
 import { useAppDispatch } from 'hooks/redux';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,6 +18,66 @@ import { clearAll } from 'store/reducers/ActionCreators';
 interface NavbarProps {
     isAuth: boolean;
 }
+
+const SmallBox = styled(Box)(({ theme }) => ({
+    flexGrow: 1,
+    display: 'flex',
+    padding: '0',
+    [theme.breakpoints.up('xs')]: {
+        display: 'flex',
+    },
+    [theme.breakpoints.up('md')]: {
+        display: 'none',
+    },
+}));
+
+const SmallTypography = styled(Typography)(({ theme }) => ({
+    mr: 2,
+    [theme.breakpoints.up('xs')]: {
+        display: 'none',
+    },
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
+    },
+})) as typeof Typography;
+
+const BigBox = styled(Box)(({ theme }) => ({
+    flexGrow: 1,
+    [theme.breakpoints.up('xs')]: {
+        display: 'none',
+    },
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
+    },
+}));
+
+const BigTypography = styled(Typography)(({ theme }) => ({
+    flexGrow: 1,
+    [theme.breakpoints.up('xs')]: {
+        display: 'flex',
+    },
+    [theme.breakpoints.up('md')]: {
+        display: 'none',
+    },
+})) as typeof Typography;
+
+const BigButton = styled(Button)({
+    my: 2,
+    color: 'white',
+    display: 'block',
+});
+
+const StatMenu = styled(Menu)(({ theme }) => ({
+    [theme.breakpoints.up('xs')]: {
+        display: 'block',
+    },
+    [theme.breakpoints.up('md')]: {
+        display: 'none',
+    },
+    '& .MuiList-root': {
+        padding: '0',
+    },
+}));
 
 const pages = [
     { name: 'Головна сторінка', link: MAIN_SCREEN },
@@ -64,21 +125,10 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                    >
+                    <SmallTypography variant="h6" noWrap component="div">
                         Мої фінанси
-                    </Typography>
-
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: 'flex', md: 'none' },
-                        }}
-                    >
+                    </SmallTypography>
+                    <SmallBox>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -89,7 +139,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Menu
+                        <StatMenu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
@@ -103,9 +153,6 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
                         >
                             {pages.map((page) => (
                                 <MenuItem
@@ -113,47 +160,25 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
                                     onClick={handleCloseNavMenu}
                                 >
                                     <Typography textAlign="center">
-                                        <Link
-                                            to={page.link}
-                                            className="nav_link"
-                                        >
-                                            {page.name}
-                                        </Link>
+                                        <Link to={page.link}>{page.name}</Link>
                                     </Typography>
                                 </MenuItem>
                             ))}
-                        </Menu>
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: 'flex', md: 'none' },
-                        }}
-                    >
+                        </StatMenu>
+                    </SmallBox>
+                    <BigTypography variant="h6" noWrap component="div">
                         Мої фінанси
-                    </Typography>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: 'none', md: 'flex' },
-                        }}
-                    >
+                    </BigTypography>
+                    <BigBox>
                         {pages.map((page) => (
-                            <Button
+                            <BigButton
                                 key={page.link}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                <Link to={page.link} className="nav_link">
-                                    {page.name}
-                                </Link>
-                            </Button>
+                                <Link to={page.link}>{page.name}</Link>
+                            </BigButton>
                         ))}
-                    </Box>
-
+                    </BigBox>
                     <Box>
                         <Button color="inherit" onClick={logOut}>
                             Вийти

@@ -1,3 +1,4 @@
+import { styled } from '@mui/system';
 import { useAppSelector } from 'hooks/redux';
 import { ITransaction } from 'models/ITransaction';
 import React from 'react';
@@ -17,6 +18,11 @@ interface IDataForGraphic {
     date: string;
     amount: number;
 }
+
+const DivChart = styled('div')({
+    width: '90%',
+    height: 400,
+});
 
 const Chart: React.FC = () => {
     const { transactions } = useAppSelector(transactionSelector);
@@ -66,17 +72,9 @@ const Chart: React.FC = () => {
     if (dataForGraphic.length == 0) return <></>;
 
     return (
-        <div style={{ width: '90%', height: 400 }}>
+        <DivChart>
             <ResponsiveContainer>
-                <AreaChart
-                    data={dataForGraphic}
-                    margin={{
-                        top: 10,
-                        right: 30,
-                        left: 0,
-                        bottom: 0,
-                    }}
-                >
+                <AreaChart data={dataForGraphic}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
                     <YAxis />
@@ -109,7 +107,7 @@ const Chart: React.FC = () => {
                     />
                 </AreaChart>
             </ResponsiveContainer>
-        </div>
+        </DivChart>
     );
 };
 
