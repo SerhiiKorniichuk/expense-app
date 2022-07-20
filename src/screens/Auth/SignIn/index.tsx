@@ -17,106 +17,123 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const SigninSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(2, "Password need contain at least 8 characters")
+    .max(50, "Password need contain not more then 50 characters")
+    .required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 const SignIn = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [errorEmail, setErrorEmail] = useState<string>("");
-  const [errorPassword, setErrorPassword] = useState<string>("");
   const [typeIsPassword, setTypeIsPassword] = useState<boolean>(true);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
-  const handleSubmit = (e: any): void => {
-    e.preventDefault();
-
-    if (!email) {
-      setErrorEmail("Required");
-      return undefined;
-    }
-
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      setErrorEmail("Invalid email");
-      return undefined;
-    }
-
-    if (!password) {
-      setErrorPassword("Required");
-      return undefined;
-    }
-  };
-
-  console.log(errorPassword)
-
 
   return (
     <Wrapper>
       <Typography variant="h1" align="center">
         Sign In
       </Typography>
-      <Form component="form" onSubmit={(e): void => handleSubmit(e)}>
-        <CustomInput
-          id="standard-required"
-          label={errorEmail || "Email Address"}
-          value={email}
-          onChange={(e): void => {
-            setEmail(e.target.value);
-            setErrorEmail("");
-          }}
-          variant="standard"
-          InputProps={{ disableUnderline: true }}
-          autoComplete="off"
-          error={!!errorEmail}
-        />
-        <Password variant="standard" className={errorPassword ? "error" : ""}>
-          <InputLabel htmlFor="standard-adornment-password" className={errorPassword ? "error" : ""}>
-            Password
-          </InputLabel>
-          <Input
-            id="standard-adornment-password"
-            value={password}
-            onChange={(e): void => {
-              setPassword(e.target.value);
-              setErrorPassword("");
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validationSchema={SigninSchema}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <Form
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
             }}
-            autoComplete="false"
-            error={!!errorPassword}
-            type={typeIsPassword ? "password" : "text"}
-            endAdornment={
-              <InputButton
-                type="button"
-                onClick={(): void => setTypeIsPassword(!typeIsPassword)}
+          >
+            <CustomInput
+              id="standard-required"
+              label={
+                errors.email && touched.email ? errors.email : "Email Address"
+              }
+              value={values.email}
+              name="email"
+              onChange={handleChange}
+              variant="standard"
+              InputProps={{ disableUnderline: true }}
+              autoComplete="off"
+              error={!!(errors.email && touched.email)}
+            />
+            <Password
+              variant="standard"
+              className={errors.password && touched.password ? "error" : ""}
+            >
+              <InputLabel
+                htmlFor="standard-adornment-password"
+                className={errors.password && touched.password ? "error" : ""}
               >
-                {typeIsPassword ? (
-                  <VisibilityOffOutlinedIcon />
-                ) : (
-                  <RemoveRedEyeOutlinedIcon />
-                )}
-              </InputButton>
-            }
-          />
-        </Password>
-        <SpaceBetweenWrapper>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
+                {errors.password && touched.password
+                  ? errors.password
+                  : "Password"}
+              </InputLabel>
+              <Input
+                id="standard-adornment-password"
+                value={values.password}
+                name="password"
+                onChange={handleChange}
+                autoComplete="false"
+                error={!!(errors.password && touched.password)}
+                type={typeIsPassword ? "password" : "text"}
+                endAdornment={
+                  <InputButton
+                    type="button"
+                    onClick={(): void => setTypeIsPassword(!typeIsPassword)}
+                  >
+                    {typeIsPassword ? (
+                      <VisibilityOffOutlinedIcon />
+                    ) : (
+                      <RemoveRedEyeOutlinedIcon />
+                    )}
+                  </InputButton>
+                }
               />
-            }
-            label="Remember me"
-          />
-          <CustomLink to="/reset-password">Reset Password?</CustomLink>
-        </SpaceBetweenWrapper>
-        <Button type="submit" variant="contained">
-          Login
-        </Button>
-        <JustifyCenterWrapper>
-          <Typography variant="h2" align="center">
-            Don’t have account yet?
-          </Typography>
-          <CustomLink to="/sign-up">New Account</CustomLink>
-        </JustifyCenterWrapper>
-      </Form>
+            </Password>
+            <SpaceBetweenWrapper>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                  />
+                }
+                label="Remember me"
+              />
+              <CustomLink to="/reset-password">Reset Password?</CustomLink>
+            </SpaceBetweenWrapper>
+            <Button type="submit" variant="contained">
+              Login
+            </Button>
+            <JustifyCenterWrapper>
+              <Typography variant="h2" align="center">
+                Don’t have account yet?
+              </Typography>
+              <CustomLink to="/sign-up">New Account</CustomLink>
+            </JustifyCenterWrapper>
+          </Form>
+        )}
+      </Formik>
     </Wrapper>
   );
 };
