@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { CustomInput, Form } from "../styles";
-import { Wrapper } from "./signInStyles";
-
+import { Wrapper } from "./resetPasswordStep1Styles";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import leptop from "../../../assets/images/leptop.png";
+import { useNavigate } from "react-router-dom";
 
 interface SignUpProps {
   setImage?: any;
@@ -17,6 +17,8 @@ const SigninSchema = Yup.object().shape({
 });
 
 const ResetPasswordStep1 = ({ setImage }: SignUpProps) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     setImage(leptop);
   }, []);
@@ -36,7 +38,6 @@ const ResetPasswordStep1 = ({ setImage }: SignUpProps) => {
       <Formik
         initialValues={{
           email: "",
-          password: "",
         }}
         validationSchema={SigninSchema}
         onSubmit={(values) => {
@@ -48,7 +49,7 @@ const ResetPasswordStep1 = ({ setImage }: SignUpProps) => {
             component="form"
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              navigate("/auth/reset-password-step-2");
             }}
           >
             <CustomInput
