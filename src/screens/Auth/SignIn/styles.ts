@@ -2,7 +2,8 @@ import styled from "styled-components";
 import Box, { BoxProps } from "@mui/material/Box";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import FormControl, { FormControlProps } from "@mui/material/FormControl";
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import { Link, LinkProps } from "react-router-dom";
 
 export const Wrapper = styled(Box)<BoxProps>`
   width: 100%;
@@ -26,19 +27,54 @@ export const Wrapper = styled(Box)<BoxProps>`
 
 export const Form = styled(Box)<BoxProps>`
   width: 23.5714rem;
+
+  .MuiInput-root:hover:not(.Mui-disabled):before {
+    border-bottom: none;
+  }
+
+  .MuiButton-root {
+    margin-top: 1.74rem;
+    background-color: #539713;
+    text-transform: none;
+    border-radius: 2px;
+    width: 100%;
+    height: 3.1428rem;
+    color: white;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.03rem;
+    line-height: 155%;
+    margin-bottom: 1.76rem;
+
+    &:hover {
+      background-color: white;
+      color: #539713;
+    }
+  }
+
+  .error .MuiInputLabel-root {
+    color: #ff8080;
+  }
+
+  .error .MuiInputBase-root {
+    border-bottom: 2px solid #ff8080;
+  }
 `;
 
 export const CustomInput = styled(TextField)<TextFieldProps>`
   width: 23.571rem;
 
   .MuiInputBase-root {
-    border-bottom: 2px solid white;
     margin-bottom: 1.9rem;
   }
 
   .MuiInput-input {
-    color: white;
-    opacity: 0.7;
+    border-bottom: 2px solid white;
+  }
+
+  .MuiInput-input {
+    color: rgba(255, 255, 255, 0.7);
     font-family: "Montserrat";
     font-weight: 400;
     font-size: 1.1428rem;
@@ -61,7 +97,6 @@ export const CustomInput = styled(TextField)<TextFieldProps>`
   .Mui-error .MuiInput-input {
     border-bottom: 2px solid #ff8080;
     color: #ff8080;
-    margin-bottom: 1.714rem;
     margin-top: 0.27rem;
     font-weight: 400;
     font-size: 1.12rem;
@@ -108,22 +143,24 @@ export const Password = styled(FormControl)<FormControlProps>`
     color: white;
   }
 
-  .Mui-error .MuiInput-input {
-    border-bottom: 1px solid #ff8080;
+  .Mui-error * {
     color: #ff8080;
-    margin-top: 0.27rem;
-    font-weight: 400;
-    font-size: 1.12rem;
   }
 
-  & label.Mui-error {
+  .error {
     color: #ff8080;
+
+    * {
+      color: #ff8080;
+    }
   }
 
   .MuiIconButton-root {
     padding: 0;
     padding-right: 0.08rem;
   }
+
+ 
 `;
 
 export const InputButton = styled(IconButton)<IconButtonProps>`
@@ -137,21 +174,65 @@ export const InputButton = styled(IconButton)<IconButtonProps>`
 export const SpaceBetweenWrapper = styled(Box)<BoxProps>`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   .MuiTypography-root {
     font-weight: 400;
-    font-size: 0.857rem;
+    font-size: 0.688rem;
     margin: 0;
     text-transform: none;
-    color: #F5F5F5;
+    color: #f5f5f5;
     opacity: 0.8;
   }
 
   svg {
-    width: 1.45rem;
-    height: 1.45rem;
-    margin-left: 0.3rem;
+    width: 1.52rem;
+    height: 1.52rem;
+    margin-left: 0.2rem;
     color: white;
     opacity: 0.8;
+  }
+
+  input,
+  .MuiCheckbox-root {
+    width: max-content;
+  }
+
+  .MuiCheckbox-root {
+    padding-right: 0.15rem;
+  }
+`;
+
+export const CustomLink = styled(Link)<LinkProps>`
+  color: #69b0ff;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8571rem;
+  line-height: 155%;
+  text-decoration: none;
+  margin-right: 0.5rem;
+`;
+
+export const JustifyCenterWrapper = styled(Box)<BoxProps>`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .MuiTypography-root {
+    color: #f5f5f5;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.82rem;
+    line-height: 155%;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    text-transform: none;
+    margin: 0;
+    letter-spacing: 0.26px;
+    margin-right: 0.35rem;
+    margin-left: 0.2rem;
   }
 `;
