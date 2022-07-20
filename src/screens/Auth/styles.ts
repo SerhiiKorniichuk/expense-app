@@ -23,7 +23,7 @@ export const Form = styled(Box)<BoxProps>`
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 600;
-    font-size: 1.03rem;
+    font-size: 1.1rem;
     line-height: 155%;
     margin-bottom: 1.76rem;
 
