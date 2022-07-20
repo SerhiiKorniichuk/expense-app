@@ -1,7 +1,7 @@
 import React from "react";
 import Box, { BoxProps } from '@mui/material/Box';
 import styled from "styled-components";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./pages/Auth";
 
 const Wrapper = styled(Box)<BoxProps>`
@@ -12,7 +12,10 @@ function App() {
   return (
     <Wrapper>
       <BrowserRouter>
-      <Auth />
+      <Routes>
+        <Route path="/auth/*" element={<Auth />}/>
+        <Route path="/" element={<Navigate to="/auth/sign-in" replace/>} />
+      </Routes>
       </BrowserRouter>
     </Wrapper>
   );

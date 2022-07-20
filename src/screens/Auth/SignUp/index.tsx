@@ -4,12 +4,10 @@ import {
   Form,
   Password,
   InputButton,
-  SpaceBetweenWrapper,
   CustomLink,
-  JustifyCenterWrapper,
+  CheckboxText,
 } from "../styles";
-import { Wrapper } from "./signInStyles";
-
+import { Wrapper, CheckboxWrapper } from "./signUpStyles";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
@@ -20,13 +18,17 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import rightImage from "../../../assets/images/neverGiveUp.png";
-
-interface SignUpProps {
-  setImage?: any
-};
+import duckImage from "../../../assets/images/duck.png";
 
 const SigninSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .min(2, "Full name need contain at least 8 characters")
+    .max(50, "Full name need contain not more then 50 characters")
+    .required("Required"),
+  userName: Yup.string()
+    .min(2, "User name need contain at least 8 characters")
+    .max(50, "User name need contain not more then 50 characters")
+    .required("Required"),
   password: Yup.string()
     .min(8, "Password need contain at least 8 characters")
     .max(50, "Password need contain not more then 50 characters")
@@ -34,21 +36,27 @@ const SigninSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const SignIn = ({ setImage }: SignUpProps) => {
+interface SignUpProps {
+  setImage?: any
+};
+
+const SignUp = ({ setImage } : SignUpProps) => {
   const [typeIsPassword, setTypeIsPassword] = useState<boolean>(true);
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [agreeTermsOfUse, setAgreeTermsOfUse] = useState<boolean>(false);
 
   useEffect(() => {
-    setImage(rightImage)
+    setImage(duckImage);
   }, []);
 
   return (
     <Wrapper>
       <Typography variant="h1" align="center" className="header">
-        Sign In
+        Sign Up
       </Typography>
       <Formik
         initialValues={{
+          fullName: "",
+          userName: "",
           email: "",
           password: "",
         }}
@@ -57,7 +65,15 @@ const SignIn = ({ setImage }: SignUpProps) => {
           console.log(values);
         }}
       >
-        {({ values, errors, touched, handleChange, handleSubmit }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
           <Form
             component="form"
             onSubmit={(e) => {
@@ -65,7 +81,34 @@ const SignIn = ({ setImage }: SignUpProps) => {
               handleSubmit();
             }}
           >
-          
+            <CustomInput
+              label={
+                errors.fullName && touched.fullName
+                  ? errors.fullName
+                  : "Full Name"
+              }
+              value={values.fullName}
+              name="fullName"
+              onChange={handleChange}
+              variant="standard"
+              InputProps={{ disableUnderline: true }}
+              autoComplete="off"
+              error={!!(errors.fullName && touched.fullName)}
+            />
+            <CustomInput
+              label={
+                errors.userName && touched.userName
+                  ? errors.userName
+                  : "User Name"
+              }
+              value={values.userName}
+              name="userName"
+              onChange={handleChange}
+              variant="standard"
+              InputProps={{ disableUnderline: true }}
+              autoComplete="off"
+              error={!!(errors.userName && touched.userName)}
+            />
             <CustomInput
               label={
                 errors.email && touched.email ? errors.email : "Email Address"
@@ -112,27 +155,30 @@ const SignIn = ({ setImage }: SignUpProps) => {
                 }
               />
             </Password>
-            <SpaceBetweenWrapper>
+            <CheckboxWrapper>
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={rememberMe}
-                    onChange={() => setRememberMe(!rememberMe)}
+                    checked={agreeTermsOfUse}
+                    onChange={() => setAgreeTermsOfUse(!agreeTermsOfUse)}
                   />
                 }
-                label="Remember me"
+                label={
+                  <CheckboxText>
+                    By creating an account you agree to the{" "}
+                    <CustomLink to="/terms-of-use">terms of use</CustomLink>
+                    terms of use and our{" "}
+                    <CustomLink to="/privacy-policy">
+                      privacy policy.
+                    </CustomLink>
+                  </CheckboxText>
+                }
               />
-              <CustomLink to="/auth/reset-password">Reset Password?</CustomLink>
-            </SpaceBetweenWrapper>
+            </CheckboxWrapper>
+
             <Button type="submit" variant="contained">
-              Login
+              Sign Up
             </Button>
-            <JustifyCenterWrapper>
-              <Typography variant="h2" align="center">
-                Don’t have account yet?
-              </Typography>
-              <CustomLink to="/auth/sign-up">New Account</CustomLink>
-            </JustifyCenterWrapper>
           </Form>
         )}
       </Formik>
@@ -140,4 +186,4 @@ const SignIn = ({ setImage }: SignUpProps) => {
   );
 };
 
-export default SignIn;
+export default SignUp;

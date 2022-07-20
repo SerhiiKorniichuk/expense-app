@@ -5,26 +5,6 @@ import FormControl, { FormControlProps } from "@mui/material/FormControl";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { Link, LinkProps } from "react-router-dom";
 
-export const Wrapper = styled(Box)<BoxProps>`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  .MuiTypography-root {
-    font-family: "Montserrat";
-    font-size: 4rem;
-    font-weight: 700;
-    margin-top: 11.2rem;
-    letter-spacing: 0.123rem;
-    color: white;
-    font-size: 4rem;
-    margin-bottom: 2.5rem;
-    text-transform: uppercase;
-    line-height: 150%;
-  }
-`;
-
 export const Form = styled(Box)<BoxProps>`
   width: 23.5714rem;
 
@@ -159,8 +139,6 @@ export const Password = styled(FormControl)<FormControlProps>`
     padding: 0;
     padding-right: 0.08rem;
   }
-
- 
 `;
 
 export const InputButton = styled(IconButton)<IconButtonProps>`
@@ -178,11 +156,12 @@ export const SpaceBetweenWrapper = styled(Box)<BoxProps>`
 
   .MuiTypography-root {
     font-weight: 400;
-    font-size: 0.688rem;
+    font-size: 0.83rem;
     margin: 0;
     text-transform: none;
     color: #f5f5f5;
     opacity: 0.8;
+    font-family: "Montserrat";
   }
 
   svg {
@@ -208,7 +187,7 @@ export const CustomLink = styled(Link)<LinkProps>`
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
-  font-size: 0.8571rem;
+  font-size: 0.83rem;
   line-height: 155%;
   text-decoration: none;
   margin-right: 0.5rem;
@@ -235,4 +214,8 @@ export const JustifyCenterWrapper = styled(Box)<BoxProps>`
     margin-right: 0.35rem;
     margin-left: 0.2rem;
   }
+`;
+
+export const CheckboxText = styled(Box)`
+  display: inline;
 `;

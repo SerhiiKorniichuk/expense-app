@@ -22,4 +22,5 @@ export const RightBlock = styled(Box)<RightImage>`
   min-height: 100vh;
   width: 52.2857rem;
   background-image: ${({ $rightImage }) => `url(${($rightImage)})`};
+  background-size: cover;
 `;
