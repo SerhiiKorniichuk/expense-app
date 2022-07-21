@@ -10,20 +10,29 @@ import leptop from "../../../assets/images/leptop.png";
 import Input from "@mui/material/Input";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import { useNavigate } from "react-router-dom";
 
 interface SignUpProps {
   setImage?: any;
 }
 
 const SigninSchema = Yup.object().shape({
-  password: Yup.string().email("Invalid email").required("Required"),
-  repeatPassword: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string()
+    .min(8, "Password need contain at least 8 characters")
+    .max(50, "Password need contain not more then 50 characters")
+    .required("Required"),
+  repeatPassword: Yup.string()
+    .min(8, "Password need contain at least 8 characters")
+    .max(50, "Password need contain not more then 50 characters")
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required("Required"),
 });
 
 const ResetPasswordStep2 = ({ setImage }: SignUpProps) => {
   const [typeIsPassword, setTypeIsPassword] = useState<boolean>(true);
   const [repeatTypeIsPassword, setRepeatTypeIsPassword] =
     useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setImage(leptop);
@@ -42,6 +51,7 @@ const ResetPasswordStep2 = ({ setImage }: SignUpProps) => {
         validationSchema={SigninSchema}
         onSubmit={(values) => {
           console.log(values);
+          navigate("/auth/reset-password-step-3");
         }}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -88,11 +98,15 @@ const ResetPasswordStep2 = ({ setImage }: SignUpProps) => {
 
             <Password
               variant="standard"
-              className={errors.repeatPassword && touched.repeatPassword ? "error" : ""}
+              className={
+                errors.repeatPassword && touched.repeatPassword ? "error" : ""
+              }
             >
               <InputLabel
                 htmlFor="standard-adornment-password"
-                className={errors.repeatPassword && touched.repeatPassword ? "error" : ""}
+                className={
+                  errors.repeatPassword && touched.repeatPassword ? "error" : ""
+                }
               >
                 {errors.repeatPassword && touched.repeatPassword
                   ? errors.repeatPassword
@@ -108,7 +122,9 @@ const ResetPasswordStep2 = ({ setImage }: SignUpProps) => {
                 endAdornment={
                   <InputButton
                     type="button"
-                    onClick={(): void => setRepeatTypeIsPassword(!repeatTypeIsPassword)}
+                    onClick={(): void =>
+                      setRepeatTypeIsPassword(!repeatTypeIsPassword)
+                    }
                   >
                     {repeatTypeIsPassword ? (
                       <VisibilityOffOutlinedIcon />

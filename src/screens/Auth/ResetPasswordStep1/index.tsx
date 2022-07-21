@@ -42,6 +42,7 @@ const ResetPasswordStep1 = ({ setImage }: SignUpProps) => {
         validationSchema={SigninSchema}
         onSubmit={(values) => {
           console.log(values);
+          navigate("/auth/reset-password-step-2");
         }}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -49,7 +50,7 @@ const ResetPasswordStep1 = ({ setImage }: SignUpProps) => {
             component="form"
             onSubmit={(e) => {
               e.preventDefault();
-              navigate("/auth/reset-password-step-2");
+              handleSubmit();
             }}
           >
             <CustomInput

@@ -19,6 +19,7 @@ import Button from "@mui/material/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import duckImage from "../../../assets/images/duck.png";
+import { useNavigate } from "react-router-dom";
 
 const SigninSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -43,6 +44,7 @@ interface SignUpProps {
 const SignUp = ({ setImage } : SignUpProps) => {
   const [typeIsPassword, setTypeIsPassword] = useState<boolean>(true);
   const [agreeTermsOfUse, setAgreeTermsOfUse] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setImage(duckImage);
@@ -63,6 +65,7 @@ const SignUp = ({ setImage } : SignUpProps) => {
         validationSchema={SigninSchema}
         onSubmit={(values) => {
           console.log(values);
+          navigate("/auth/successful-registration");
         }}
       >
         {({
