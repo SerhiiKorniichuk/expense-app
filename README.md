@@ -9,7 +9,7 @@
 
 Дизайн: [**Figma**](https://www.figma.com/file/FOLd8B665OmyKjlGsbRDb1/WEB-APP-Incode-Finance)
 
-API документація: [**Swagger**](https://incode-backend-dev.herokuapp.com/api/)
+API документація: [**Swagger**](https://expa.fly.dev/api)
 
 <br>
 
